@@ -1,0 +1,105 @@
+#!markdown
+
+# Hello World - speedcore
+
+Czyli wstęp do C# na z pełną prędkością.
+
+0. Konsola
+1. Liczby i operacje na liczbach
+2. Łańcuchy i operacje na łańcuchach
+3. Klasa, interfejs, enum
+4. Modyfikatory dostępu - basics
+5. IEnumerable vs ICollection vs IList
+6. Słownik
+
+Jak to działa? Kliknij "play" przy fragmencie kodu. Zmodyfikuj go i sprawdź co się stanie.
+
+#!csharp
+
+Console.WriteLine("Hello World!");
+
+#!markdown
+
+## 0. Konsola
+
+Klasyczny wydruk na konsolę. Poza tym często wykorzystywane jest również `Console.ReadLine()`, `Console.ReadKey()` oraz `Console.Write()` - to akurat do dołączenia zawartości do ostatnio wydrukowanego tekstu.
+
+### Zadanie
+
+Napisz program, który zapyta użytkownika o imię, a następnie wypisze: `Witaj, {imię}!`
+
+#!csharp
+
+var name = "imię";
+Console.WriteLine($"Witaj, {name}!");
+
+#!markdown
+
+## 1. Liczby i operacje na liczbach
+
+Jeżeli programujesz już w języku C/C++ albo Javie to znasz już wszystkie podstawowe typy danych liczbowych. 
+
+#!csharp
+
+byte reallySmall = (byte) 126;
+short small = 1000;
+int number = 10;
+long bigNumber = 10000000;
+float commaNumber = 123.45f;
+double biggerComma = 1234.5678d;
+decimal bigbignumber = 123456.123456m;
+
+#!markdown
+
+# String Interpolation
+
+You just used `+` to build a new string from a **variable** and a **constant**. There's a better way to do this by placing the variable between `{`and `}` to tell C# to replace that text with the value of the variable. This is called **string interpolation**. You can then add a `$` before the opening quote to enable string interpolation for the string.
+
+#!csharp
+
+aFriend = "string interpolation";
+Console.WriteLine($"Hello {aFriend}!");
+
+#!markdown
+
+You did it! You just created your first C# application and learned about combining strings with string interpolation.
+
+#!markdown
+
+# Playground: Try it yourself
+
+Each module will have a little "playground" at the end. This is a space for you to try writing some code yourself, instead of looking at prewritten code.
+Try out printing words and variables! Here are some prompts to try:
+> Print out a personal motto.
+>
+> Make some variables with your favorite foods, and then write a little story involving them.
+>
+> **Challenge!**
+>
+> Make your own Mad Libs! Make a few variables that are verbs, nouns, etcetera, and then use them when you write a story. Have a friend decide the value of each variable and read it to them for a laugh!
+
+#!csharp
+
+Console.WriteLine("Playground");
+
+#!markdown
+
+# Continue learning
+
+There are plenty more resources out there to learn!
+>> [⏩ Next Module - The Basics of Strings](http://tinyurl.com/csharp-notebook02)
+>
+> [Watch the video](https://www.youtube.com/watch?v=KT2VR7m19So&list=PLdo4fOcmZ0oVxKLQCHpiUWun7vlJJvUiN&index=2)
+>
+> [Documentation: Intro to C#](https://docs.microsoft.com/dotnet/csharp/tour-of-csharp/tutorials/hello-world?WT.mc_id=csharpnotebook-35129-website)
+
+#!markdown
+
+# Other resources
+
+Here's some more places to explore:
+> [Other 101 Videos](https://dotnet.microsoft.com/learn/videos?WT.mc_id=csharpnotebook-35129-website)
+>
+> [Microsoft Learn](https://docs.microsoft.com/learn/dotnet/?WT.mc_id=csharpnotebook-35129-website)
+>
+> [C# Documentation](https://docs.microsoft.com/dotnet/csharp/?WT.mc_id=csharpnotebook-35129-website)
