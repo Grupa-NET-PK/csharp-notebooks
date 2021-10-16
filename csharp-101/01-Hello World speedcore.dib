@@ -5,12 +5,13 @@
 Czyli wstęp do C# na z pełną prędkością.
 
 0. Konsola
-1. Liczby i operacje na liczbach
-2. Łańcuchy i operacje na łańcuchach
-3. Klasa, interfejs, enum
-4. Modyfikatory dostępu - basics
-5. IEnumerable vs ICollection vs IList
-6. Słownik
+1. Zmienne
+2. Liczby i operacje na liczbach
+3. Łańcuchy i operacje na łańcuchach
+4. Klasa, interfejs, enum
+5. Modyfikatory dostępu - basics
+6. IEnumerable vs ICollection vs IList
+7. Słownik
 
 Jak to działa? Kliknij "play" przy fragmencie kodu. Zmodyfikuj go i sprawdź co się stanie.
 
@@ -35,7 +36,30 @@ Console.WriteLine($"Witaj, {name}!");
 
 #!markdown
 
-## 1. Liczby i operacje na liczbach
+## 1. Zmienne
+
+Każdy typ danych w języku C# da się zapisać do zmiennej typu `var`, której typ kompilator domyśla się samodzielnie. Jest to obecnie sugerowane rozwiązanie, kiedy piszesz kod w np. Visual Studio 2019.
+
+#!csharp
+
+var number = 20;
+var text = "text";
+var letter = 'c';
+var array = new[] { "a", "b", "c"};
+var dictionary = new Dictionary<string, string>() { {"a", "hello"}};
+var differentType = new object();
+
+#!markdown
+
+Jedyne czego nie można wykonywać to do zmiennej "typu" var przypisywać wartości `null` ponieważ kompilator nie będzie w stanie ustalić jej typu i rzuci błędem.
+
+#!csharp
+
+var error = null;
+
+#!markdown
+
+## 2. Liczby i operacje na liczbach
 
 Jeżeli programujesz już w języku C/C++ albo Javie to znasz już wszystkie podstawowe typy danych liczbowych. 
 
@@ -51,18 +75,114 @@ decimal bigbignumber = 123456.123456m;
 
 #!markdown
 
-# String Interpolation
+## 2. Łańcuchy i operacje na łańcuchach
 
-You just used `+` to build a new string from a **variable** and a **constant**. There's a better way to do this by placing the variable between `{`and `}` to tell C# to replace that text with the value of the variable. This is called **string interpolation**. You can then add a `$` before the opening quote to enable string interpolation for the string.
+Łańcuchy możesz znać z języka C++ albo Javy. W języku C łańcuchy w podstawowej wersji występują jako wskaźniki na tablice znaków. Przykładowy łańcuch.
 
 #!csharp
 
-aFriend = "string interpolation";
-Console.WriteLine($"Hello {aFriend}!");
+var text = "Just a simple string";
 
 #!markdown
 
-You did it! You just created your first C# application and learned about combining strings with string interpolation.
+W C# również działa zasada, że tekst to tablica znaków. Możemy więc wydrukować każdy z osobna w nowej lini.
+
+#!csharp
+
+var shortText = "Hello";
+foreach (var letter in shortText)
+{
+    Console.WriteLine(letter);
+}
+
+#!markdown
+
+## Operacje - Interpolacja
+
+Może już kiedyś korzystałeś z łączenia łańcuchów z innymi łańcuchami przy pomocy `+` aby połączyć kilka zmiennych ze sobą. Od C# w wersji 6 czyli od czerwca 2015 jest na to lepszy sposób - nazywa się interpolacja łańcuchów, z angielskiego **string interpolation**. 
+
+Jak to działa? Przed cudzysłowiem oznaczającym łańcuch dodajesz `$`, a zmienne, które chcesz dodać wpisujesz w `{`oraz `}`. Krótki przykład.
+
+#!csharp
+
+var friend = "Rupert";
+Console.WriteLine($"Hello {friend}!");
+
+#!markdown
+
+Zamiennie z interpolacją kiedyś stosowano formatowanie. Drukując w konsoli możesz skorzystać z wbudowanego formatowania. Jeżeli chcesz tylko zapisać zmienną, robisz to trochę inaczej. Przykłady:
+
+#!csharp
+
+var name = "Rupert";
+var place = "Politechnika Koszalińska";
+var time = "8 AM";
+var stringFormatting = string.Format("Let's meet with {0} at {1} at {2}", name, place, time);
+Console.WriteLine(stringFormatting);
+
+Console.WriteLine("Let's meet with {0} at {1} at {2}", name, place, time);
+
+#!markdown
+
+## Operacje - ToLower(), ToUpper() oraz Replace()
+
+Z tych funkcji prawdopodobnie będziesz korzystać najczęściej.
+
+`ToLower()` - zamiana wszystkich liter na małe
+
+`ToUpper()` - zamiana wszystkich liter na duże
+
+`Replace(toReplace)` - zamiana jakiegokolwiek ciągu z
+
+#!csharp
+
+var text = "PeteR";
+var lower = text.ToLower();
+var upper = text.ToUpper();
+var onlySpolgloski = text.Replace("e", "");
+Console.WriteLine($"Lower: {lower}, upper: {upper}, replace: {onlySpolgloski}");
+
+#!markdown
+
+## Operacje - Split
+
+Czasami potrzebujesz oddzielić wyrazy w tekście wpisanym przez użytkownika. Prosty przykład - program konsolowy, użytkownik podaje argumenty startowe programu. Jak odczytać taki tekst i wyłuskać wartości startowe?
+
+#!csharp
+
+var textArgs = "--delay=10 --shutdown=100 --generator=Console";
+var args = textArgs.Split(" ");
+foreach(var arg in args)
+{
+    Console.WriteLine(arg);
+}
+
+#!markdown
+
+## 4. Klasa, interfejs, enum
+
+Klasa jest dokładnie tym samym co klasa w Javie. Owszem, w języku C++ klasa spełnia podobne zadanie, ale w C# nie deklaruje się pliku nagłówkowego dla klasy. Klasa może być pusta, ale w większości przypadków ma w sobie jakieś `properties` czyli pola, może jakieś prywatne zmienne. Może posiadać konstruktor - ale **uwaga dla Javowców** nie musi posiadać. Oprócz tego w klasie zazwyczaj znajdziemy jakieś metody.
+
+#!csharp
+
+class Car {
+    public string Mark { get; set; }
+    public string Model { get; set; }
+    public string Owner { get; set; }
+
+    public Car(string mark, string model, string owner) {
+        Mark = mark;
+        Model = model;
+        Owner = owner;
+    }
+
+    public string Describe() {
+        return $"The owner of {Mark} {Model} is {Owner}";
+    }
+}
+
+var bentley = new Car("Bentley", "X0", "Mark Zuckerberg");
+Console.WriteLine(bentley.Describe());
 
 #!markdown
 
