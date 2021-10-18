@@ -75,6 +75,33 @@ decimal bigbignumber = 123456.123456m;
 
 #!markdown
 
+### Zadanie 1
+
+Napisz program, który doda do siebie byte, short, int i long. Zapisze wartość do longa i do byte'a. Każdą ze zmiennych wyświetli w konsoli.
+
+#!csharp
+
+byte colorCode = 10;
+// Kod
+
+Console.WriteLine("Byte:" + colorCode);
+Console.WriteLine("Long: " + colorCode)
+
+#!markdown
+
+### Zadanie 2
+
+Korzystając ze statycznych metod klasy `Convert` zamień tekst na int oraz double. Przekonwertowane wyniki wyświetl w konsoli.
+
+Sugestia: Domyślnie w VS Code powinien działać system podpowiedzi kontekstowych IntelliSense, który pokaże Ci listę dostępnych metod do użycia. Jeżeli wciąż Ci się nie wyświetla, zgłoś problem prowadzącemu. 
+
+#!csharp
+
+string integerValue = "123";
+string decimalValue = "33.12";
+
+#!markdown
+
 ## 2. Łańcuchy i operacje na łańcuchach
 
 Łańcuchy możesz znać z języka C++ albo Javy. W języku C łańcuchy w podstawowej wersji występują jako wskaźniki na tablice znaków. Przykładowy łańcuch.
@@ -186,6 +213,40 @@ Console.WriteLine(bentley.Describe());
 
 #!markdown
 
+## 5. Modyfikatory dostępu - basics
+
+#!markdown
+
+## 6. IEnumerable vs ICollection vs IList
+
+#!csharp
+
+var array = new[] { 1, 2, 3};
+IList list = new List<int>() { 1, 2, 3 };
+
+#!markdown
+
+## 7. Słownik
+
+Słownik jest złożonym typem danych, który bardzo często przydaje się w pracy samodzielnej oraz pracy w firmach. Prosty przykład wykorzystania słownika. Po słownikach można iterować, można dopisywać do nich klucze oraz pobierać wartości po kluczach.
+
+Warto korzystać z metody TryGetValue ponieważ w ten sposób unikamy ewentualnego Exceptiona na wypadek braku takiego klucza.
+
+#!csharp
+
+var nameAgeDictionary = new Dictionary<string, int>()
+{
+    { "Marek", 33 },
+    { "Tomasz", 22 },
+    { "Julia", 18 }
+};
+
+nameAgeDictionary.Add("Adrian", 40); // dodanie
+int mareksAge;
+nameAgeDictionary.TryGetValue("Marek", out mareksAge);
+
+#!markdown
+
 # Playground: Try it yourself
 
 Each module will have a little "playground" at the end. This is a space for you to try writing some code yourself, instead of looking at prewritten code.
@@ -201,25 +262,3 @@ Try out printing words and variables! Here are some prompts to try:
 #!csharp
 
 Console.WriteLine("Playground");
-
-#!markdown
-
-# Continue learning
-
-There are plenty more resources out there to learn!
->> [⏩ Next Module - The Basics of Strings](http://tinyurl.com/csharp-notebook02)
->
-> [Watch the video](https://www.youtube.com/watch?v=KT2VR7m19So&list=PLdo4fOcmZ0oVxKLQCHpiUWun7vlJJvUiN&index=2)
->
-> [Documentation: Intro to C#](https://docs.microsoft.com/dotnet/csharp/tour-of-csharp/tutorials/hello-world?WT.mc_id=csharpnotebook-35129-website)
-
-#!markdown
-
-# Other resources
-
-Here's some more places to explore:
-> [Other 101 Videos](https://dotnet.microsoft.com/learn/videos?WT.mc_id=csharpnotebook-35129-website)
->
-> [Microsoft Learn](https://docs.microsoft.com/learn/dotnet/?WT.mc_id=csharpnotebook-35129-website)
->
-> [C# Documentation](https://docs.microsoft.com/dotnet/csharp/?WT.mc_id=csharpnotebook-35129-website)
