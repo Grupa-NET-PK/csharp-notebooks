@@ -85,7 +85,7 @@ byte colorCode = 10;
 // Kod
 
 Console.WriteLine("Byte:" + colorCode);
-Console.WriteLine("Long: " + colorCode)
+Console.WriteLine("Long: " + colorCode);
 
 #!markdown
 
@@ -98,7 +98,12 @@ Sugestia: Domyślnie w VS Code powinien działać system podpowiedzi kontekstowy
 #!csharp
 
 string integerValue = "123";
-string decimalValue = "33.12";
+string decimalValue = "33,12";
+
+var convertedInt = Convert.ToInt32(integerValue);
+var hexString = Convert.ToHexString(new [] { (byte) convertedInt });
+var convertedDecimal = Convert.ToDecimal(decimalValue);
+Console.WriteLine($"Int: {convertedInt}, hex: {hexString}, decimal: {convertedDecimal}");
 
 #!markdown
 
@@ -197,19 +202,22 @@ class Car {
     public string Model { get; set; }
     public string Owner { get; set; }
 
-    public Car(string mark, string model, string owner) {
-        Mark = mark;
-        Model = model;
-        Owner = owner;
-    }
+    // public Car(string mark, string model, string owner) {
+    //     Mark = mark;
+    //     Model = model;
+    //     Owner = owner;
+    // }
 
     public string Describe() {
         return $"The owner of {Mark} {Model} is {Owner}";
     }
 }
 
-var bentley = new Car("Bentley", "X0", "Mark Zuckerberg");
-Console.WriteLine(bentley.Describe());
+// var bentley = new Car("Bentley", "X0", "Mark Zuckerberg");
+// Console.WriteLine(bentley.Describe());
+
+var ferrari = new Car { Mark = "Ferrari", Model = "Testarossa", Owner = "Rafał" };
+Console.WriteLine(ferrari.Describe());
 
 #!markdown
 
@@ -217,12 +225,47 @@ Console.WriteLine(bentley.Describe());
 
 #!markdown
 
-## 6. IEnumerable vs ICollection vs IList
+## 6. Kolekcje
+
+W C# mamy kilka różnych rodzajów kolekcji. Najprotszą z nich jest tablica (1). Jeżeli potrzebujemy mieć możliwość dynamicznego dodawnia / usuwania elementów ze zbioru przyda nam się Lista (2). Istnieją jeszcze wariacje tych typów. Możemy użyć Hashsetu - który ma bardzo krótki czas dostępu do danych za sprawą hashowania (indeksowania) danych, które do niego dodajemy. (3). Istnieje również coś takiego jak ArrayList (4). Ostatnim rodzajem kolekcji jest SortedList, który wraz z dodawaniem elementów od razu dodaje element w odpowiednie miejsce, wg klucza. Lista jest sortowana rosnąco - ascending (5). Minus jest taki, że nie możemy dodać elementu o tym samym kluczu.
 
 #!csharp
 
-var array = new[] { 1, 2, 3};
-IList list = new List<int>() { 1, 2, 3 };
+var array = new[] { 1, 2, 3 };
+var list = new List<int>() { 1, 2, 3 };
+var hashSet = new HashSet<int>() { 1, 2, 3 };
+Console.WriteLine(string.Join(", ", hashSet.ToArray()));
+
+var arrayList = new ArrayList() { "a", 10, true };
+Console.WriteLine(string.Join(", ", arrayList.ToArray()));
+Console.WriteLine("Tylko liczby: " + string.Join(", ", arrayList.OfType<int>()));
+
+var sortedList = new SortedList<int, string>();
+sortedList.Add(10, "Tomasz");
+sortedList.Add(-3, "Julia");
+sortedList.Add(11, "Dagmara");
+foreach(var entry in sortedList.Select(kv => $"{kv.Key}: {kv.Value}")) {
+    Console.WriteLine(entry);
+}
+
+#!markdown
+
+Bardzo często korzysta się z metody `string.Join()`, aby wyświetlić wszystkie elementy listy / tablicy / kolekcji w jednej lini. Przykład:
+
+#!csharp
+
+var names = new[] { "James", "Jessica", "Brian", "Karen"};
+Console.WriteLine(string.Join(", ", names));
+
+#!markdown
+
+### Zadanie
+
+Stwórz listę sześciu pierwszych elementów ciągu fibonacciego (jak nie wiesz co to - odsyłam do wujka google) - wypisz je w podobny sposób (po przecinku) jak w przykładzie wyżej.
+
+#!csharp
+
+// twój kod
 
 #!markdown
 
@@ -242,8 +285,61 @@ var nameAgeDictionary = new Dictionary<string, int>()
 };
 
 nameAgeDictionary.Add("Adrian", 40); // dodanie
+
+var value = nameAgeDictionary["Marek"];
+
 int mareksAge;
-nameAgeDictionary.TryGetValue("Marek", out mareksAge);
+if (nameAgeDictionary.TryGetValue("Marek", out mareksAge)) {
+    Console.WriteLine(mareksAge);
+}
+
+var amount = int.Parse("12");
+int amount2;
+int.TryParse("12", out amount2);
+
+#!markdown
+
+### Zadanie 1
+
+Stworz słownik, którego kluczami będą języki programowania. Wartościami będzie wartość od 0 do 1 (double) twój poziom znajomości tych języków. Zawartość słownika wydrukuj w konsoli w sposób: `{klucz}: {wartość}`
+
+#!csharp
+
+// twój kod
+
+#!markdown
+
+### Zadanie 2
+
+Dodaj do słownika 2 nowe wpisy korzystając z metody `Add()`, wyświetl jego zawartość w konsoli. Następnie usuń pierwszy wpis korzystając z metody `Remove()` i wyświetl zawartość tego słownika.
+
+#!csharp
+
+var dogNamePopularity = new Dictionary<string, int>()
+{
+    { "Misiek", 10},
+    { "Reks", 6},
+    { "Klusek", 8},
+    { "Burek", 15}
+};
+
+#!markdown
+
+### Zadanie 3
+
+Korzystając z wiedzy z rozdziału o listach, wydrukuj zawartość słownika dogNamePropositions. Stwórz drugi słownik, do którego będziesz zapisywać ile razy padała dana propozycja psiego imienia.
+
+UWAGA! Liczenie ręczne odpada.
+
+#!csharp
+
+var dogNamePropositions = new Dictionary<string, IEnumerable<string>>() 
+{
+    { "Maria", new[] { "Klusek", "Roxi", "Bambino" }},
+    { "Tomek", new[] { "Reks", "Burek", "Tosia" }},
+    { "Dariusz", new[] { "Burek", "Klusek", "Roxi" }},
+    { "Agnieszka", new[] { "Wawa", "Malinka", "Roxi" }}
+};
 
 #!markdown
 
